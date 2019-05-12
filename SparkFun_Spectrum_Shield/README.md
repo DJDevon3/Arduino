@@ -3,7 +3,7 @@ SparkFun Spectrum shield code examples
 
 The sketch shows the potential of the SparkFun Spectrum Shield. It's the only demo I've seen that shows the plotter working for all 7 bands from the shield in real time. Once you see the multiplexor is real you'll have a better idea of how to integrate it into your project.
 
- ![](https://github.com/DJDevon3/SparkFun_Spectrum/blob/master/SparkFun_Spectrum_Frequency_Demo.JPG)
+ ![](https://raw.githubusercontent.com/DJDevon3/Arduino/master/SparkFun_Spectrum_Shield/SparkFun_Spectrum_Frequency_Demo.JPG)
  This is about 60 seconds worth of reading every band while listening to music from Audio In. From this you can extract individual band data from the array for your graphic equalizer or vu projects. Dubstep looks just like it sounds.
 
 ### Analyzer Demo
@@ -21,7 +21,7 @@ On any Arduino Uno, if an analog input pin isn't connected to anything, the valu
 ##### 2. Plug in an unconnected breadboard wire to the analog pin. (peak shown is plugging it in then reading open air).
 What is shown is the Arduino Uno's default behavior without the SparkFun shield attached.
 
- ![](https://raw.githubusercontent.com/DJDevon3/SparkFun_Spectrum/master/AnalogReadOscillator.JPG)
+ ![](https://raw.githubusercontent.com/DJDevon3/Arduino/master/SparkFun_Spectrum_Shield/AnalogReadOscillator.JPG)
  
 It is the Arduino's analog reader waveform from the crystal oscilliator. You don't need to account for the oscillator in your sketches just be aware it is there and don't worry if it shows up in your plotter. Once you use audio in with music or microphone it will go away.
 
