@@ -10,7 +10,7 @@ The sketch shows the potential of the SparkFun Spectrum Shield. It's the only de
 Processes dual 7 band multiplexors and writes them to serial data which can be viewed in serial monitor or serial plotter. Ultimately, it's a good thing to see for yourself both the potential and limitation of the Uno and Spectrum shield combination.
 
 ### ATMega Sample Rate
-ATmega based boards (UNO, Nano, Mini, Mega) take about 100 microseconds (0.0001 s) to read an analog input. 1 second = 1000000 microseconds. The ATMega chip cannot exceed 20Hz so a 16Hz crystal oscillator is used. 16Hz = 62500 microseconds. That is the maximum sampling possible sample rate.  It takes a few microseconds to read data so if you're looking for precision you'll want to account for that.
+ATmega based boards (UNO, Nano, Mini, Mega) take about 100 microseconds (0.0001 s) to read an analog input. 1 second = 1000000 microseconds. The ATMega chip cannot exceed 20Hz so a 16Hz crystal oscillator is used. 16Hz = 62500 microseconds. That is the maximum possible sampling rate. It takes a few microseconds to read data so if you're looking for precision you'll want to account for that.
 
 ### 30 Microsecond Delay for the MSGEQ7
 It's required that the MSGEQ7 be given a 30 microsecond delay. It might be tempting to remove the delay in hopes of faster sampling, that would be a mistake. The delay is specified in the MSGEQ7's datasheet. If you do not give it that precise delay, your sketch will fail to properly read the band data.
