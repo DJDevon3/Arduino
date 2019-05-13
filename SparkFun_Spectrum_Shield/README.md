@@ -23,7 +23,7 @@ What is shown is the Arduino Uno's default behavior without the SparkFun shield 
 
  ![](https://raw.githubusercontent.com/DJDevon3/Arduino/master/SparkFun_Spectrum_Shield/AnalogReadOscillator.JPG)
  
-It is the Arduino's analog reader waveform from the crystal oscilliator. You don't need to account for the oscillator in your sketches just be aware it is there and don't worry if it shows up in your plotter. Once you use audio in with music or microphone it will go away.
+This is the Arduino's analog reader waveform from the crystal oscilliator. You don't need to account for the oscillator in your sketches just be aware it is there and don't worry if it shows up in your plotter. Once you use audio in with music or microphone it will practically go away. It won't be 100% gone but close enough to 0 to the point it can be ignored if you want to. It is generally considered noise to be cleared up with voltage bias floor limiters in sketches.  You'll routinely see voltage floor limiters when used with the MSGEQ7 for noise reduction especially for audio react projects.
 
 ### Spectrum Shield Reset
 The shield's reset button is traced to the RST pin header. When the button is pressed it pulls RST to ground which reloads the Arduino's last sketch. The reset button is the same as using the Arduino's reset button. It's not a true reset only a reload of the last sketch. There is no such thing as a factory reset on an Arduino Uno.
