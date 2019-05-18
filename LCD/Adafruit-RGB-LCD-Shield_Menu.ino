@@ -1,72 +1,80 @@
-/*********************
+/*********************************************************************************************
+ADAFRUIT NEGATIVE RGB LCD SHIELD MENU
+Example menu code for the Adafruit NEGATIVE RGB LCD Shield using the Adafruit RGB LCD Library
+Adafruit Negative RGB Shield Product Page: https://www.adafruit.com/product/714
 
-Example menu code for the Adafruit NEGATIVE RGB LCD Shield and Adafruit RGB Library
 Coded by DJDevon3 https://github.com/DJDevon3/Arduino
 Adapted code by PaulSS for a LiquidCrystal.h LCD.
 https://www.instructables.com/id/Arduino-Uno-Menu-Template/
 
-This code will probably work with other Adafruit library shields, I only have this one to test.
-If you have code suggestions to make this SIMPLE MENU EXAMPLE more efficient feel free to contact me. :)
-
-Adafruit Negative RGB LCD Shield
-Uses only the I2C pins - Analog 4 & 5 on classic Arduinos, Digital 20 and 21 on Arduino Mega R3
-This board/chip uses I2C 7-bit address 0x20
-**********************/
-
-// include the library code:
+If you have code examples to make this menu better submit a pull request on my github. :)
+***********************************************************************************************/
 #include <Wire.h>
 #include <Adafruit_RGBLCDShield.h>
 #include <utility/Adafruit_MCP23017.h>
-
-// The shield uses the I2C SCL and SDA pins. On classic Arduinos
-// this is Analog 4 and 5 so you can't use those for analogRead() anymore
-// However, you can connect other I2C sensors to the I2C bus and share
-// the I2C bus.
 Adafruit_RGBLCDShield lcd = Adafruit_RGBLCDShield();
 
-// These #defines make it easy to set the backlight color. These are all the colors available for the negative RGB backlight shield.
-#define RED 0x1
+#define RED 0x1 // Every backlight color available for the negative RGB backlight shield.
 #define YELLOW 0x3
 #define GREEN 0x2
 #define TEAL 0x6
 #define BLUE 0x4
 #define VIOLET 0x5
 #define WHITE 0x7
-#define DISABLE 0x8
+#define DISABLE 0x8 // Turns display completely off, will "wake" display upon button press. Unused in this sketch but nice to have!
 const int BaudRate = 115200;
 
-// name the items in the array whatever you want
+/* MAIN MENU ITEM ARRAY: 
+ *  Name items whatever you want. Array is auto counted. No variable for adjusting amount of items is required. :) 
+ *  To have more than 12 add switch/cases and void functions. To have less than 12 no modifications required.
+*/
 String menuItems[] = {"ITEM 1", "ITEM 2", "ITEM 3", "ITEM 4", "ITEM 5", "ITEM 6", "ITEM 7", "ITEM 8", "ITEM 9", "ITEM 10", "ITEM 11", "ITEM 12"};
 
-#define NUMITEMS(menuItems) ((unsigned int) (sizeof (menuItems) / sizeof (menuItems [0])))
+#define NUMITEMS(menuItems) ((unsigned int) (sizeof (menuItems) / sizeof (menuItems [0]))) // Item array auto counter
 int maxMenuPages = (NUMITEMS (menuItems)-2);
- //int maxMenuPages = round(((sizeof(menuItems) / sizeof(String)) / 2) + .5);
  
-// Navigation button variables
-int readKey;
-
-// Menu control variables
+int readKey; // Holds value of keypress during menu navigation
 int menuPage = 0;
-int cursorPosition = 0;
+int cursorPosition = 0; 
 
-  // Creates custom arrow characters for the menu display (in hex).
-  // You can only create a maximum of 8 custom characters choose wisely. 6 are already here for you.
-  byte leftArrow[8] = {0x00,0x04,0x0C,0x1F,0x0C,0x04,0x00,0x00};
-  // byte rightArrow[8] = {0x00,0x04,0x06,0x1F,0x06,0x04,0x00,0x00}; don't really need 2 right arrows
-  byte checkMark[8] = {0x0,0x1,0x3,0x16,0x1c,0x8,0x0}; // unused but available for value set confirmations
-  byte upArrow[8] = {0x04,0x0E,0x1F,0x04,0x04,0x04,0x04,0x00};
-  byte downArrow[8] = {0x04,0x04,0x04,0x04,0x1F,0x0E,0x04,0x00};
-  byte menuCursor[8] = {0x10,0x08,0x04,0x02,0x04,0x08,0x10,0x00};  // right arrow menu navigation
+/* CUSTOM LCD CHARACTERS 
+ *  Creates custom arrow characters for the menu display (in hex). 
+ *  You can only create a maximum of 8 custom characters with this library. Choose wisely. 6 are already here for you.
+*/
+byte rightArrow[8] = {0x10,0x08,0x04,0x02,0x04,0x08,0x10,0x00};
+byte upArrow[8] = {0x04,0x0E,0x1F,0x04,0x04,0x04,0x04,0x00};
+byte downArrow[8] = {0x04,0x04,0x04,0x04,0x1F,0x0E,0x04,0x00};
+byte leftArrow[8] = {0x01,0x02,0x04,0x08,0x04,0x02,0x01,0x00};
+byte cancelMark[8] = {0x0,0x1b,0xe,0x4,0xe,0x1b,0x0}; // unused, available for value cancel confirmations
+byte checkMark[8] = {0x0,0x1,0x3,0x16,0x1c,0x8,0x0}; // unused, available for value set confirmations
 
+void NavRight(){ // Creates custom character display as functions for easy use within other functions.
+  lcd.write(byte(0));
+}
+void NavUp(){ // menu navigation up arrow
+  lcd.write(byte(1));
+}
+void NavDown(){ // menu navigation down arrow
+  lcd.write(byte(2));
+}
+void NavLeft(){ // menu navigation left arrow
+  lcd.write(byte(3));
+}
+void NavCancel(){ // menu navigation checkmark
+  lcd.write(byte(4));
+}
+void NavConfirm(){ // menu navigation checkmark
+  lcd.write(byte(5));
+}
 
 void setup() {
-  Serial.begin(BaudRate); // Set above as a const int so you can lcd.print it to your display if you want.
+  Serial.begin(BaudRate); // Configure this in initialized variables. Const int so you can lcd.print it to your display if you want.
   lcd.begin(16, 2); // set up the LCD's number of columns and rows:
-  lcd.createChar(0, menuCursor); // Create the custom arrow characters in void setup for global use
+  lcd.createChar(0, rightArrow); // Tranlates custom arrow characters from hex to lcd. Now initialized for global use after lcd.begin
   lcd.createChar(1, upArrow);
   lcd.createChar(2, downArrow);
   lcd.createChar(3, leftArrow);
-  lcd.createChar(4, rightArrow);
+  lcd.createChar(4, cancelMark);
   lcd.createChar(5, checkMark);
   lcd.setBacklight(RED);
   lcd.print("LED Show Chooser");
@@ -77,18 +85,13 @@ void setup() {
   delay(500);
   lcd.setBacklight(BLUE);
   delay(500);
-
-}
-void loop() {
-  mainMenuDraw();
-  drawCursor();
-  operateMainMenu();
 }
 
 /* EVERY PAGE HAS 2 MAIN MENU ITEMS. 
  *  Don't get pages confused with items. 
- *  Draws 2 menu items on the screen. 
- *  They change as you scroll through the menu.
+ *  Draws 2 menu items on each page of the main menu. 
+ *  You scroll up/down through both items and pages.
+ *  Printed to serial monitor (not LCD) for debugging.
 */
 void mainMenuDraw() {
   lcd.setBacklight(WHITE);
@@ -101,15 +104,15 @@ void mainMenuDraw() {
   lcd.print(menuItems[menuPage + 1]);
   if (menuPage == 0) {
     lcd.setCursor(15, 1);
-    lcd.write(byte(2));
+    NavDown();
   } else if (menuPage > 0 and menuPage < maxMenuPages) {
     lcd.setCursor(15, 1);
-    lcd.write(byte(2));
+    NavDown();
     lcd.setCursor(15, 0);
-    lcd.write(byte(1));
+    NavUp();
   } else if (menuPage == maxMenuPages) {
     lcd.setCursor(15, 0);
-    lcd.write(byte(1));
+    NavUp();
   }
 }
 
@@ -127,25 +130,27 @@ void drawCursor() {
   if (menuPage % 2 == 0) {
     if (cursorPosition % 2 == 0) {  // If the menu page is even and the cursor position is even that means the cursor should be on line 1
       lcd.setCursor(0, 0);
-      lcd.write(byte(0));
+      NavRight();
     }
     if (cursorPosition % 2 != 0) {  // If the menu page is even and the cursor position is odd that means the cursor should be on line 2
       lcd.setCursor(0, 1);
-      lcd.write(byte(0));
+      NavRight();
     }
   }
   if (menuPage % 2 != 0) {
     if (cursorPosition % 2 == 0) {  // If the menu page is odd and the cursor position is even that means the cursor should be on line 2
       lcd.setCursor(0, 1);
-      lcd.write(byte(0));
+      NavRight();
     }
     if (cursorPosition % 2 != 0) {  // If the menu page is odd and the cursor position is odd that means the cursor should be on line 1
       lcd.setCursor(0, 0);
-      lcd.write(byte(0));
+      NavRight();
     }
   }
 }
-
+/*
+ * MAIN MENU SWITCH CASES
+ */
 void operateMainMenu() {
   int activeButton = 0;
   while (activeButton == 0) {
@@ -249,8 +254,10 @@ void operateMainMenu() {
   }
 }
 
-// Monitors for shield button presses and returns which was pressed.
-/* HARDWARE SHIELD PIN VALUES
+/* BUTTON PRESS EVALUATOR
+ * Monitors for shield button presses and returns which was pressed.
+ * Prints to serial monitor (not LCD) for debugging.
+ * HARDWARE SHIELD PIN VALUES
  * BUTTON READING STATE = 0
  * BUTTON_RIGHT = 2
  * BUTTON_UP = 8
@@ -284,10 +291,7 @@ int evaluateButton(int x) {
   }
   return result;
 }
-void backArrow(){ // Sub menu navigation back arrow
-  lcd.setCursor(0,0);
-  lcd.write(byte(3));
-}
+
 void backbutton (){ // Left button navigates back until mainmenu
    int activeButton = 0;
      while (activeButton == 0) {
@@ -308,11 +312,17 @@ void backbutton (){ // Left button navigates back until mainmenu
   } 
 }
 
+/*
+ * SUB MENU PAGES
+ * For now we'll use functions. Someday you'll want use arrays and loops to make it dynamic.
+ * This is just to demonstrate basic functionality of a menu system.
+ */
 void subItem1() { // Function executes when you select the 1st item from main menu
   lcd.clear();
-  backArrow();
+  lcd.setCursor(0,0);
+  NavLeft();
   lcd.setCursor(15, 1);
-  lcd.write(byte(2));
+  NavDown();
   lcd.setCursor(3, 0);
   lcd.print("Sub Menu 1");
   lcd.setBacklight(RED);
@@ -322,7 +332,8 @@ void subItem1() { // Function executes when you select the 1st item from main me
 
 void subItem2() { // Function executes when you select the 2nd item from main menu
   lcd.clear();
-  backArrow();
+  lcd.setCursor(0,0);
+  NavLeft();
   lcd.setCursor(3, 0);
   lcd.print("Sub Menu 2");
   lcd.setBacklight(YELLOW);
@@ -331,7 +342,8 @@ void subItem2() { // Function executes when you select the 2nd item from main me
 
 void subItem3() { // Function executes when you select the 3rd item from main menu
   lcd.clear();
-  backArrow();
+  lcd.setCursor(0,0);
+  NavLeft();
   lcd.setCursor(3, 0);
   lcd.print("Sub Menu 3");
   lcd.setBacklight(GREEN);
@@ -340,7 +352,8 @@ void subItem3() { // Function executes when you select the 3rd item from main me
 
 void subItem4() { // Function executes when you select the 4th item from main menu
   lcd.clear();
-  backArrow();
+  lcd.setCursor(0,0);
+  NavLeft();
   lcd.setCursor(3, 0);
   lcd.print("Sub Menu 4");
   lcd.setBacklight(TEAL);
@@ -349,7 +362,8 @@ void subItem4() { // Function executes when you select the 4th item from main me
 
 void subItem5() { // Function executes when you select the 5th item from main menu
   lcd.clear();
-  backArrow();
+  lcd.setCursor(0,0);
+  NavLeft();
   lcd.setCursor(3, 0);
   lcd.print("Sub Menu 5");
   lcd.setBacklight(BLUE);
@@ -358,7 +372,8 @@ void subItem5() { // Function executes when you select the 5th item from main me
 
 void subItem6() { // Function executes when you select the 6th item from main menu
   lcd.clear();
-  backArrow();
+  lcd.setCursor(0,0);
+  NavLeft();
   lcd.setCursor(3, 0);
   lcd.print("Sub Menu 6");
   lcd.setBacklight(VIOLET);
@@ -367,7 +382,8 @@ void subItem6() { // Function executes when you select the 6th item from main me
 
 void subItem7() { // Function executes when you select the 7th item from main menu
   lcd.clear();
-  backArrow();
+  lcd.setCursor(0,0);
+  NavLeft();
   lcd.setCursor(3, 0);
   lcd.print("Sub Menu 7");
   lcd.setBacklight(RED);
@@ -376,7 +392,8 @@ void subItem7() { // Function executes when you select the 7th item from main me
 
 void subItem8() { // Function executes when you select the 8th item from main menu
   lcd.clear();
-  backArrow();
+  lcd.setCursor(0,0);
+  NavLeft();
   lcd.setCursor(3, 0);
   lcd.print("Sub Menu 8");
   lcd.setBacklight(YELLOW);
@@ -385,7 +402,8 @@ void subItem8() { // Function executes when you select the 8th item from main me
 
 void subItem9() { // Function executes when you select the 9th item from main menu
   lcd.clear();
-  backArrow();
+  lcd.setCursor(0,0);
+  NavLeft();
   lcd.setCursor(3, 0);
   lcd.print("Sub Menu 9");
   lcd.setBacklight(GREEN);
@@ -394,7 +412,8 @@ void subItem9() { // Function executes when you select the 9th item from main me
 
 void subItem10() { // Function executes when you select the 10th item from main menu
   lcd.clear();
-  backArrow();
+  lcd.setCursor(0,0);
+  NavLeft();
   lcd.setCursor(3, 0);
   lcd.print("Sub Menu 10");
   lcd.setBacklight(TEAL);
@@ -403,7 +422,8 @@ void subItem10() { // Function executes when you select the 10th item from main 
 
 void subItem11() { // Function executes when you select the 10th item from main menu
   lcd.clear();
-  backArrow();
+  lcd.setCursor(0,0);
+  NavLeft();
   lcd.setCursor(3, 0);
   lcd.print("Sub Menu 11");
   lcd.setBacklight(GREEN);
@@ -411,9 +431,16 @@ void subItem11() { // Function executes when you select the 10th item from main 
 }
 void subItem12() { // Function executes when you select the 10th item from main menu
   lcd.clear();
-  backArrow();
+  lcd.setCursor(0,0);
+  NavLeft();
   lcd.setCursor(3, 0);
   lcd.print("Sub Menu 12");
   lcd.setBacklight(TEAL);
   backbutton ();
+}
+
+void loop() {
+  mainMenuDraw();
+  drawCursor();
+  operateMainMenu();
 }
