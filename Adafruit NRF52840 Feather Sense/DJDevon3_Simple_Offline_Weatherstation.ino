@@ -239,13 +239,13 @@ unsigned long Display() {
   tft.println("Feather Bluefruit Sense + TFT Wing Demo");
   tft.println("----------------------------------------");
   // Show temp in different colors depending on temperature value
-  if (tempf <= 50){
+  if (tempf <= 49){
     tft.setTextColor(HX8357_CYAN, HX8357_BLACK);
-  } else if (tempf > 50 && tempf < 75) {
+  } else if (tempf > 49 && tempf <= 74) {
     tft.setTextColor(HX8357_GREEN, HX8357_BLACK);
-  } else if (tempf > 75 && tempf < 95) {
+  } else if (tempf > 74 && tempf <= 94) {
     tft.setTextColor(HX8357_YELLOW, HX8357_BLACK);
-  } else if (tempf > 95) {
+  } else if (tempf > 94) {
     tft.setTextColor(HX8357_RED, HX8357_BLACK);
   } else {
     tft.setTextColor(HX8357_WHITE, HX8357_BLACK);
