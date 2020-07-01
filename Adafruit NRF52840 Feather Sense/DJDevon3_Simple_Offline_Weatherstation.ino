@@ -302,7 +302,7 @@ unsigned long Display() {
   tft.print(" ");
   tft.println(gyro_z);
   tft.setTextSize(2);
-  tft.print("Mic Sound Pressure: "); // Pulse Density Modulation (PDM) units. This is not a conventional microphone.
+  tft.print("Sound Level: "); // Pulse Density Modulation (PDM) microphone. Not a conventional microphone.
   tft.println(mic);
 
   
