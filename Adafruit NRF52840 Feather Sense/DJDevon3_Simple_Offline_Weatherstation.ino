@@ -13,6 +13,8 @@
   MIT license, all text above must be included in any redistribution
  ****************************************************/
  /* Simple Offline Indoor Weather Station using Adafruit NRF52840 Bluefruit Feather Sense & Adafruit 3.5" TFT by DJDevon3 */
+ /**************  Feather Bluefruit Sense + TFT Wing Demo ***********/
+ // This sketch requires an Adafruit Bluefruit Sense & Adafruit 3.5" TFT Featherwing.
 
 #include <SPI.h>
 #include "Adafruit_GFX.h"
@@ -142,8 +144,8 @@ void loop(void) {
   tempf = (tempc*1.8)+32;
   pressure = bmp280.readPressure();
   millibar = (pressure / 100);
-  altitude = bmp280.readAltitude(1017.10);
-  elevation = (altitude * 3.00);
+  altitude = bmp280.readAltitude(millibar); // This can be customized by manually entering your local barometric pressure in millibars. Format is (1014.00)
+  elevation = (altitude * 3.00); // Converts altitude from meters to feet.
  
   lis3mdl.read();
   magnetic_x = lis3mdl.x;
@@ -226,31 +228,88 @@ void loop(void) {
   */
 }
 
+// All possible font colors in the HX8357 library.
+// Black, Blue, Red, Green, Cyan, Magenta, Yellow, White
+/************************  TFT DISPLAY OUTPUT  *****************************/
 unsigned long Display() {
   unsigned long start = micros();
   tft.setCursor(0, 0);
   tft.setTextColor(HX8357_YELLOW, HX8357_BLACK);
-  tft.setTextSize(3);
-  tft.println("Feather Sense Sensor Demo");
-  tft.println("--------------------------");
-  tft.setTextColor(HX8357_GREEN, HX8357_BLACK);
-  tft.setTextSize(7);
-  tft.print("Temp: ");
-  //tft.print(tempc);
-  //tft.print("C / ");
-  tft.print(tempf);
-  tft.println(" F");
+  tft.setTextSize(2);
+  tft.println("Feather Bluefruit Sense + TFT Wing Demo");
+  tft.println("----------------------------------------");
+  // Show temp in different colors depending on temperature value
+  if (tempf <= 50){
+    tft.setTextColor(HX8357_CYAN, HX8357_BLACK);
+  } else if (tempf > 50 && tempf < 75) {
+    tft.setTextColor(HX8357_GREEN, HX8357_BLACK);
+  } else if (tempf > 75 && tempf < 95) {
+    tft.setTextColor(HX8357_YELLOW, HX8357_BLACK);
+  } else if (tempf > 95) {
+    tft.setTextColor(HX8357_RED, HX8357_BLACK);
+  } else {
+    tft.setTextColor(HX8357_WHITE, HX8357_BLACK);
+  }
   tft.setTextSize(4);
-  tft.print("\nHumidity: ");
+  tft.print("Temp: ");
+  tft.print(tempc);
+  tft.print("C / ");
+  tft.print(tempf);
+  tft.println("F");
+  tft.setTextColor(HX8357_GREEN, HX8357_BLACK);
+  tft.setTextSize(3);
+  tft.print("\nHumidity:  ");
   tft.print(humidity);
   tft.println(" %");
-  tft.print("\nBarometer: ");
+  tft.setTextSize(3);
+  tft.print("Barometer: ");
   tft.println(millibar);
-   
+  tft.setTextSize(3);
+  tft.print("Elevation: ");
+  tft.print(elevation);
+  tft.println(" Feet");
+  tft.setTextColor(HX8357_CYAN, HX8357_BLACK);
+  tft.setTextSize(2);
+  tft.print("\nProximity: ");
+  tft.println(apds9960.readProximity());
+  tft.print("Red: ");
+  tft.print(r);
+  tft.print(" Green: ");
+  tft.print(g);
+  tft.print(" Blue :");
+  tft.print(b);
+  tft.print(" Clear: ");
+  tft.println(c);
+  tft.setTextSize(2);
+  tft.print("Magnetic: "); //uTesla units
+  tft.print(magnetic_x);
+  tft.print(" ");
+  tft.print(magnetic_y);
+  tft.print(" ");
+  tft.println(magnetic_z);
+  tft.setTextSize(2);
+  tft.print("Acceleration: "); // m/s^2 units
+  tft.print(accel_x);
+  tft.print(" ");
+  tft.print(accel_y);
+  tft.print(" ");
+  tft.println(accel_z);
+  tft.setTextSize(2);
+  tft.print("Gyro: "); // dps units
+  tft.print(gyro_x);
+  tft.print(" ");
+  tft.print(gyro_y);
+  tft.print(" ");
+  tft.println(gyro_z);
+  tft.setTextSize(2);
+  tft.print("Mic Sound Pressure: "); // Pulse Density Modulation (PDM) units. This is not a conventional microphone.
+  tft.println(mic);
+
+  
   return micros() - start;
 }
 
-/******************** FEATHER SENSE SENSOR FUNCTIONS ***********************************/
+/* FEATHER SENSE SENSOR FUNCTIONS */
 int32_t getPDMwave(int32_t samples) {
   short minwave = 30000;
   short maxwave = -30000;
@@ -270,7 +329,8 @@ int32_t getPDMwave(int32_t samples) {
   }
   return maxwave - minwave;
 }
- 
+
+/* FEATHER SENSE SENSOR FUNCTIONS */
 void onPDMdata() {
   // query the number of bytes available
   int bytesAvailable = PDM.available();
