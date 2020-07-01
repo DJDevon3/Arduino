@@ -97,11 +97,8 @@ volatile int samplesRead; // number of samples read
 
 
 void setup() {
-  Serial.begin(115200);
-  
-  // Weatherstation
-  Serial.println("Feather Sense Sensor Demo");
-  // initialize the sensors
+  Serial.begin(115200); 
+  // Initialize the sensors
   apds9960.begin();
   apds9960.enableProximity(true);
   apds9960.enableColor(true);
@@ -111,9 +108,10 @@ void setup() {
   sht30.begin();
   PDM.onReceive(onPDMdata);
   PDM.begin(1, 16000);
-  //
 
+  // Initialize TFT
   tft.begin();
+  tft.fillScreen(HX8357_BLACK);
   // read diagnostics (optional but can help debug problems)
   /*
    * uint8_t x = tft.readcommand8(HX8357_RDPOWMODE);
@@ -132,6 +130,7 @@ void setup() {
 
 
 void loop(void) {
+// Display Rotation: 0 = portrait mode, 1 = landscape mode, 2 = 180 degrees, 3 = 270 degrees.
     tft.setRotation(1);
     proximity = apds9960.readProximity();
   while (!apds9960.colorDataReady()) {
@@ -165,15 +164,18 @@ void loop(void) {
   samplesRead = 0;
   mic = getPDMwave(4000);
   
-testText();
-// The entire screen is redrawn by this delay time in milliseconds. Reduce the delay to 0 and it might cause an epileptic seizure. For a simple indoor weather station a 60 second refresh is plenty. 
-// If you power it via battery you might want to delay the refresh for even longer.
-delay(60000);
+  Display(); // Main display loop
   
- // UNCOMMENT below for debugging to Serial Console
+  /* Display Refresh Delay
+  For a simple indoor weather station a 1 second refresh is plenty. 
+  If you power it via battery you might want to delay the refresh for even longer. 
+  */
+  delay(1000);
+  
+ // Uncomment below for debugging to Serial Console.
  /*
   Serial.println("\nFeather Sense Sensor Demo");
-  Serial.println("---------------------------------------------");
+  Serial.println("----------------------------");
   Serial.print("Proximity: ");
   Serial.println(apds9960.readProximity());
   Serial.print("Red: ");
@@ -224,21 +226,20 @@ delay(60000);
   */
 }
 
-unsigned long testText() {
-  tft.fillScreen(HX8357_BLACK);
+unsigned long Display() {
   unsigned long start = micros();
   tft.setCursor(0, 0);
-  tft.setTextColor(HX8357_YELLOW);
+  tft.setTextColor(HX8357_YELLOW, HX8357_BLACK);
   tft.setTextSize(3);
   tft.println("Feather Sense Sensor Demo");
   tft.println("--------------------------");
-  tft.setTextColor(HX8357_GREEN);
-  tft.setTextSize(5);
+  tft.setTextColor(HX8357_GREEN, HX8357_BLACK);
+  tft.setTextSize(7);
   tft.print("Temp: ");
-  tft.print(tempc);
-  tft.print("C / ");
+  //tft.print(tempc);
+  //tft.print("C / ");
   tft.print(tempf);
-  tft.println("F");
+  tft.println(" F");
   tft.setTextSize(4);
   tft.print("\nHumidity: ");
   tft.print(humidity);
@@ -249,7 +250,7 @@ unsigned long testText() {
   return micros() - start;
 }
 
-/******************** WEATHER STATION FUNCTION ***********************************/
+/******************** FEATHER SENSE SENSOR FUNCTIONS ***********************************/
 int32_t getPDMwave(int32_t samples) {
   short minwave = 30000;
   short maxwave = -30000;
