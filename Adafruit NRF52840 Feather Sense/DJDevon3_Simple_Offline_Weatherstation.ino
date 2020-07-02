@@ -241,16 +241,18 @@ unsigned long Display() {
   // Show temp in different colors depending on temperature value
   if (tempf <= 49){
     tft.setTextColor(HX8357_CYAN, HX8357_BLACK);
-  } else if (tempf > 49 && tempf <= 74) {
+  } else if (tempf >= 50 && tempf <= 74) {
     tft.setTextColor(HX8357_GREEN, HX8357_BLACK);
-  } else if (tempf > 74 && tempf <= 94) {
+  } else if (tempf >= 75 && tempf <= 89) {
     tft.setTextColor(HX8357_YELLOW, HX8357_BLACK);
-  } else if (tempf > 94) {
+  } else if (tempf >= 90 && tempf <= 94) {
+    tft.setTextColor(HX8357_MAGENTA, HX8357_BLACK);
+  } else if (tempf >= 95) {
     tft.setTextColor(HX8357_RED, HX8357_BLACK);
   } else {
     tft.setTextColor(HX8357_WHITE, HX8357_BLACK);
   }
-  tft.setTextSize(4);
+  tft.setTextSize(5);
   tft.print("Temp: ");
   tft.print(tempc);
   tft.print("C / ");
