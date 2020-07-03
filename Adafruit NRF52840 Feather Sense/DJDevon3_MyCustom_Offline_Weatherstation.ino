@@ -238,39 +238,25 @@ unsigned long Display() {
   tft.setTextSize(2);
   tft.println("Devons Garage Weatherstation");
   tft.println("----------------------------------------");
+  
   // Show temp in different colors depending on temperature value & keep centered for 2 digit or 3 digit number.
   //tempf = 95; // Debug temp color (120F is maximum)
   if (tempf <= 49){
     tft.setTextColor(HX8357_CYAN, HX8357_BLACK);
-    tft.setCursor(0, 40);
-    tft.setTextSize(3);
-    tft.println("Temp: ");
-    tft.setCursor(135, 80);
+    tempText();
   } else if (tempf >= 50 && tempf <= 74) {
     tft.setTextColor(HX8357_GREEN, HX8357_BLACK);
-    tft.setCursor(0, 40);
-    tft.setTextSize(3);
-    tft.println("Temp: ");
-    tft.setCursor(135, 80);
+    tempText();
   } else if (tempf >= 75 && tempf <= 89) {
     tft.setTextColor(HX8357_YELLOW, HX8357_BLACK);
-    tft.setCursor(0, 40);
-    tft.setTextSize(3);
-    tft.println("Temp: ");
-    tft.setCursor(135, 80);
+    tempText();
   } else if (tempf >= 90 && tempf <= 94) {
     tft.setTextColor(HX8357_MAGENTA, HX8357_BLACK);
-    tft.setCursor(0, 40);
-    tft.setTextSize(3);
-    tft.println("Temp: ");
-    tft.setCursor(135, 80);
+    tempText();
   } else if (tempf >= 95 && tempf <= 99) {
     tft.setTextColor(HX8357_RED, HX8357_BLACK);
-    tft.setCursor(0, 40);
-    tft.setTextSize(3);
-    tft.println("Temp: ");
-    tft.setCursor(135, 80);
-  } else if (tempf >= 100) {
+    tempText();
+  } else if (tempf >= 100 || tempf <0 ) { // If temp uses 3 characters, shift cursor position to stay centered on screen.
     tft.setTextColor(HX8357_RED, HX8357_BLACK);
     tft.setCursor(0, 40);
     tft.setTextSize(3);
@@ -278,10 +264,7 @@ unsigned long Display() {
     tft.setCursor(85, 80);
   } else {
     tft.setTextColor(HX8357_WHITE, HX8357_BLACK);
-    tft.setCursor(0, 40);
-    tft.setTextSize(3);
-    tft.println("Temp: ");
-    tft.setCursor(130, 80);
+    tempText();
   }
   
   tft.setTextSize(16);
@@ -297,9 +280,8 @@ unsigned long Display() {
   tft.println(" %");
   tft.setTextSize(3);
   tft.print("Barometer: ");
-  tft.println(millibar);
+  tft.println(millibar); //During hurricanes NOAA reports barometric pressure in millibar.
 
-  
   return micros() - start;
 }
 
@@ -322,6 +304,13 @@ int32_t getPDMwave(int32_t samples) {
     samplesRead = 0;
   }
   return maxwave - minwave;
+}
+
+void tempText(){
+    tft.setCursor(0, 40);
+    tft.setTextSize(3);
+    tft.println("Temp: ");
+    tft.setCursor(135, 80);
 }
 
 /* FEATHER SENSE SENSOR FUNCTIONS */
