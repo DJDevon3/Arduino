@@ -255,10 +255,14 @@ unsigned long Display() {
   tft.setCursor(0, 40);
   tft.setTextSize(3);
   tft.println("Temp: ");
-  tft.setCursor(100, 80);
+  tft.setCursor(130, 80);
   tft.setTextSize(16);
+  //tft.print("888");
   tft.print(tempf);
+  tft.setCursor(410, 80);
+  tft.setTextSize(4);
   tft.println("F");
+  tft.setCursor(0, 240);
   tft.setTextColor(HX8357_GREEN, HX8357_BLACK);
   tft.setTextSize(3);
   tft.print("\nHumidity:  ");
