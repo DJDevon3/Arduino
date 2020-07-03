@@ -145,7 +145,7 @@ void loop(void) {
   pressure = bmp280.readPressure();
   millibar = (pressure / 100);
   altitude = bmp280.readAltitude(millibar); // This can be customized by manually entering your local barometric pressure in millibars. Format is (1014.00)
-  elevation = (altitude * 3.00); // Converts altitude from meters to feet.
+  elevation = (altitude * 3.28); // Converts altitude from meters to feet.
  
   lis3mdl.read();
   magnetic_x = lis3mdl.x;
