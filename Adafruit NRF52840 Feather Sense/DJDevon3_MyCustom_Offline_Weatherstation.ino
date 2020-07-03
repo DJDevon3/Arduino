@@ -238,26 +238,53 @@ unsigned long Display() {
   tft.setTextSize(2);
   tft.println("Devons Garage Weatherstation");
   tft.println("----------------------------------------");
-  // Show temp in different colors depending on temperature value
+  // Show temp in different colors depending on temperature value & keep centered for 2 digit or 3 digit number.
+  //tempf = 95; // Debug temp color (120F is maximum)
   if (tempf <= 49){
     tft.setTextColor(HX8357_CYAN, HX8357_BLACK);
+    tft.setCursor(0, 40);
+    tft.setTextSize(3);
+    tft.println("Temp: ");
+    tft.setCursor(135, 80);
   } else if (tempf >= 50 && tempf <= 74) {
     tft.setTextColor(HX8357_GREEN, HX8357_BLACK);
+    tft.setCursor(0, 40);
+    tft.setTextSize(3);
+    tft.println("Temp: ");
+    tft.setCursor(135, 80);
   } else if (tempf >= 75 && tempf <= 89) {
     tft.setTextColor(HX8357_YELLOW, HX8357_BLACK);
+    tft.setCursor(0, 40);
+    tft.setTextSize(3);
+    tft.println("Temp: ");
+    tft.setCursor(135, 80);
   } else if (tempf >= 90 && tempf <= 94) {
     tft.setTextColor(HX8357_MAGENTA, HX8357_BLACK);
-  } else if (tempf >= 95) {
+    tft.setCursor(0, 40);
+    tft.setTextSize(3);
+    tft.println("Temp: ");
+    tft.setCursor(135, 80);
+  } else if (tempf >= 95 && tempf <= 99) {
     tft.setTextColor(HX8357_RED, HX8357_BLACK);
+    tft.setCursor(0, 40);
+    tft.setTextSize(3);
+    tft.println("Temp: ");
+    tft.setCursor(135, 80);
+  } else if (tempf >= 100) {
+    tft.setTextColor(HX8357_RED, HX8357_BLACK);
+    tft.setCursor(0, 40);
+    tft.setTextSize(3);
+    tft.println("Temp: ");
+    tft.setCursor(85, 80);
   } else {
     tft.setTextColor(HX8357_WHITE, HX8357_BLACK);
+    tft.setCursor(0, 40);
+    tft.setTextSize(3);
+    tft.println("Temp: ");
+    tft.setCursor(130, 80);
   }
-  tft.setCursor(0, 40);
-  tft.setTextSize(3);
-  tft.println("Temp: ");
-  tft.setCursor(130, 80);
+  
   tft.setTextSize(16);
-  //tft.print("888");
   tft.print(tempf);
   tft.setCursor(410, 80);
   tft.setTextSize(4);
