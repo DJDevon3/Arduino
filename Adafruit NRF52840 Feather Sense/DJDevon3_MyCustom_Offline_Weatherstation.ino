@@ -283,7 +283,7 @@ unsigned long Display() {
   tft.setTextColor(HX8357_GREEN, HX8357_BLACK);
   tft.setTextSize(3);
   tft.print("Humidity:  ");
-  tft.println(humidity*2);
+  tft.println(humidity);
   tft.setCursor(290, 240);
   tft.println(" %");
   tft.setTextSize(3);
