@@ -11,6 +11,6 @@ Once you play around with the demo you'll see how easy it is to customize it usi
 
  ![](https://raw.githubusercontent.com/DJDevon3/Arduino/master/Adafruit%20NRF52840%20Feather%20Sense/DJDevon3_MyCustom_Offline_Weatherstation.jpg)
  
- After some customization using setCursor positioning, temp sensor buffer, and slightly improved code.
+ After some customization using setCursor positioning, temp sensor buffer, and slightly improved code. Yes, it's actually that hot here.
  
   ![](https://github.com/DJDevon3/Arduino/blob/master/Adafruit%20NRF52840%20Feather%20Sense/DJDevon3_MyCustom_Offline_Weatherstation_Humidity.jpg)
