@@ -85,7 +85,7 @@ Adafruit_LSM6DS33 lsm6ds33; // accelerometer, gyroscope
 Adafruit_SHT31 sht30;       // humidity
 
 // Weatherstation
-uint8_t proximity, tempc, tempf;
+uint8_t proximity, tempc, tempcbuffer, tempf, tempfbuffer;
 uint16_t r, g, b, c;
 float pressure, millibar, altitude, elevation;
 float magnetic_x, magnetic_y, magnetic_z;
@@ -140,6 +140,9 @@ void loop(void) {
   }
   apds9960.getColorData(&r, &g, &b, &c);
  
+  tempcbuffer = bmp280.readTemperature();
+  tempfbuffer = (tempc*1.8)+32;
+  delay(3000);
   tempc = bmp280.readTemperature();
   tempf = (tempc*1.8)+32;
   pressure = bmp280.readPressure();
@@ -238,7 +241,8 @@ unsigned long Display() {
   tft.setTextSize(2);
   tft.println("Devons Garage Weatherstation");
   tft.println("----------------------------------------");
-  
+
+
   // Show temp in different colors depending on temperature value & keep centered for 2 digit or 3 digit number.
   //tempf = 95; // Debug temp color (120F is maximum)
   if (tempf <= 49){
@@ -254,6 +258,9 @@ unsigned long Display() {
     tft.setTextColor(HX8357_MAGENTA, HX8357_BLACK);
     tempText();
   } else if (tempf >= 95 && tempf <= 99) {
+      if (tempfbuffer >= 100 && tempf <=99){
+        tft.fillScreen(HX8357_BLACK);
+      }
     tft.setTextColor(HX8357_RED, HX8357_BLACK);
     tempText();
   } else if (tempf >= 100 || tempf <0 ) { // If temp uses 3 characters, shift cursor position to stay centered on screen.
@@ -266,6 +273,7 @@ unsigned long Display() {
     tft.setTextColor(HX8357_WHITE, HX8357_BLACK);
     tempText();
   }
+
   
   tft.setTextSize(16);
   tft.print(tempf);
@@ -276,7 +284,7 @@ unsigned long Display() {
   tft.setTextColor(HX8357_GREEN, HX8357_BLACK);
   tft.setTextSize(3);
   tft.print("\nHumidity:  ");
-  tft.print(humidity);
+  tft.print(humidity*2);
   tft.println(" %");
   tft.setTextSize(3);
   tft.print("Barometer: ");
