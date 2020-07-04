@@ -235,7 +235,6 @@ void loop(void) {
 // Black, Blue, Red, Green, Cyan, Magenta, Yellow, White
 /************************  TFT DISPLAY OUTPUT  *****************************/
 unsigned long Display() {
-  unsigned long start = micros();
   tft.setCursor(0, 0);
   tft.setTextColor(HX8357_YELLOW, HX8357_BLACK);
   tft.setTextSize(2);
@@ -274,23 +273,22 @@ unsigned long Display() {
     tempText();
   }
 
-  
   tft.setTextSize(16);
   tft.print(tempf);
   tft.setCursor(410, 80);
   tft.setTextSize(4);
   tft.println("F");
+  
   tft.setCursor(0, 240);
   tft.setTextColor(HX8357_GREEN, HX8357_BLACK);
   tft.setTextSize(3);
-  tft.print("\nHumidity:  ");
-  tft.print(humidity*2);
+  tft.print("Humidity:  ");
+  tft.println(humidity*2);
+  tft.setCursor(290, 240);
   tft.println(" %");
   tft.setTextSize(3);
   tft.print("Barometer: ");
   tft.println(millibar); //During hurricanes NOAA reports barometric pressure in millibar.
-
-  return micros() - start;
 }
 
 /* FEATHER SENSE SENSOR FUNCTIONS */
