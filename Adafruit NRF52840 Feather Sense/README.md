@@ -17,7 +17,7 @@ Once you play around with the demo you'll see how easy it is to customize it usi
   ![](https://github.com/DJDevon3/Arduino/blob/master/Adafruit%20NRF52840%20Feather%20Sense/DJDevon3_MyCustom_Offline_Weatherstation_Humidity.jpg)
   
   # BLE Timestamp Indoor Weather Station
-  This sketch has BLE integration which will pull the current date/time from your iOS device. When disconnected it goes back to the default simple offline indoor weatherstation. Unfortunately currently the Adafruit library only fully works with iOS devices. This is noted in their learn guides as of July 2020.
+  The NRF52840 will show up as "Bluefruit52", Adafruits registered name for the device. This sketch has BLE integration which will pull the current date/time from your iOS device. When disconnected it goes back to the default simple offline indoor weatherstation. Unfortunately currently the Adafruit library only fully works with iOS devices. This is noted in their learn guides as of July 2020.
   
   ![](https://github.com/DJDevon3/Arduino/blob/master/Adafruit%20NRF52840%20Feather%20Sense/DJDevon3_BLE_Weatherstation_pairing.jpg)
   
