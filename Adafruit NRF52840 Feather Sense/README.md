@@ -21,7 +21,8 @@ Once you play around with the demo you'll see how easy it is to customize it usi
   
   ![](https://github.com/DJDevon3/Arduino/blob/master/Adafruit%20NRF52840%20Feather%20Sense/DJDevon3_BLE_Weatherstation_pairing.jpg)
   
-  After paired will show current date/time pulled from your smartphone, tablet, pc, or other bluetooth time keeping device.
+  After paired will show current date/time pulled from your iOS device.
+  
   ![](https://github.com/DJDevon3/Arduino/blob/master/Adafruit%20NRF52840%20Feather%20Sense/DJDevon3_BLE_Weatherstation.jpg)
   
   
