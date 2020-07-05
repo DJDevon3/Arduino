@@ -3,7 +3,7 @@ Required hardware: Adafruit NRF52840 Feather Sense board and 3.5" TFT Featherwin
 
 I'm using this as a basic temperature, humidity, and barometric pressure display inside my garage. In Florida, on July 1st, it's 95F in here. :/
 
-This is all offline real-time sensor data. Shows all 10 of the Feather Sense's onboard sensors on the TFT display. The RGB values are part of the APDS9960 proximity sensor.
+This is all offline real-time sensor data. Shows all 10 of the Feather Sense's onboard sensors on the TFT display. The RGB values are part of the APDS9960 light sensor.
 
  ![](https://raw.githubusercontent.com/DJDevon3/Arduino/master/Adafruit%20NRF52840%20Feather%20Sense/DJDevon3_Simple_Offline_Weatherstation.jpg)
  
