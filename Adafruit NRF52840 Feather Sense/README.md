@@ -20,7 +20,7 @@ Once you play around with the demo you'll see how easy it is to customize it usi
 
  ![](https://raw.githubusercontent.com/DJDevon3/Arduino/master/Adafruit%20NRF52840%20Feather%20Sense/DJDevon3_MyCustom_Offline_Weatherstation.jpg)
  
- After some customization using setCursor positioning, temp sensor buffer, and slightly improved code. The only sensor that is +-1% is the temp sensor. All the other sensors on the Feather Sense board range from wildly innacurate to somewhat innacurate in my climate zone.
+My custom sketck uses setCursor positioning, temp sensor buffer, and slightly improved code. There are 5 different temperature ranges which change the temp font color. If all you want is a basic indoor temp monitor then this is likely the one you'll want to run instead of the sensor demo. The code is slightly more advanced than the demo but highly customizable if you aren't a beginner.
  
   ![](https://github.com/DJDevon3/Arduino/blob/master/Adafruit%20NRF52840%20Feather%20Sense/DJDevon3_MyCustom_Offline_Weatherstation_Humidity.jpg)
   
