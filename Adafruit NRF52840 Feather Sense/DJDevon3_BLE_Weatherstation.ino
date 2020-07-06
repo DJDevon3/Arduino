@@ -338,7 +338,7 @@ unsigned long Display() {
       }
     tft.setTextColor(HX8357_RED, HX8357_BLACK);
     tempText();
-  } else if (tempf >= 100 || tempf <0 ) { // If temp uses 3 characters, shift cursor position to stay centered on screen.
+  } else if (tempf >= 100 ) { // If temp uses 3 characters, shift cursor position to stay centered on screen. If you go below 0F in winter, turn on your heater!
     tft.setTextColor(HX8357_RED, HX8357_BLACK);
     tft.setCursor(0, 40);
     tft.setTextSize(3);
