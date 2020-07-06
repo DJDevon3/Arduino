@@ -13,7 +13,7 @@
   MIT license, all text above must be included in any redistribution
  ****************************************************/
  /* Simple Offline Indoor Weather Station using Adafruit NRF52840 Bluefruit Feather Sense & Adafruit 3.5" TFT by DJDevon3 */
- /**************  Devons Garage Weatherstation ***********/
+ /**************  Devons Garage Weatherstation with BLE Date/Time ***********/
  // This sketch requires an Adafruit Bluefruit Sense & Adafruit 3.5" TFT Featherwing.
 
 #include <SPI.h>
@@ -81,14 +81,14 @@ BLEClientCts  bleCTime;
 
 // TFT
 Adafruit_HX8357 tft = Adafruit_HX8357(TFT_CS, TFT_DC, TFT_RST);
-// Weatherstation
+// Feather Sense Sensors
 Adafruit_APDS9960 apds9960; // proximity, light, color, gesture
 Adafruit_BMP280 bmp280;     // temperature, barometric pressure
 Adafruit_LIS3MDL lis3mdl;   // magnetometer
 Adafruit_LSM6DS33 lsm6ds33; // accelerometer, gyroscope
 Adafruit_SHT31 sht30;       // humidity
 
-// Weatherstation
+// Feather Sense Sensor Variables
 uint8_t proximity, tempc, tempcbuffer, tempf, tempfbuffer;
 uint16_t r, g, b, c;
 float pressure, millibar, altitude, elevation;
@@ -199,7 +199,7 @@ void loop(void) {
   Display(); // Main display loop
   /* Display Refresh Delay
   For a simple indoor weather station a 1 second refresh is plenty. 
-  If you power it via battery you might want to delay the refresh for even longer. 
+  If you power it via battery you might want to delay the refresh for longer or add a TFT sleep state. 
   */
   delay(1000);
 
@@ -289,7 +289,8 @@ void fillRect(uint16_t x0, uint16_t y0, uint16_t w, uint16_t h, uint16_t color);
 
 // All possible TFT font colors in the HX8357 library.
 // TFT library is different than GFX library.
-// Black, Blue, Red, Green, Cyan, Magenta, Yellow, White
+// HX8357_ prefix then Black, Blue, Red, Green, Cyan, Magenta, Yellow, White
+// Second color is background color, good for character refreshes rather than requiring a screen redraw.
 /************************  TFT DISPLAY OUTPUT  *****************************/
 unsigned long Display() {
   const char * day_of_week_str[] = { "n/a", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
