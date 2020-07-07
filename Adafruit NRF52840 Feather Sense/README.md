@@ -25,7 +25,7 @@ My custom sketck uses setCursor positioning, temp sensor buffer, and slightly im
   ![](https://github.com/DJDevon3/Arduino/blob/master/Adafruit%20NRF52840%20Feather%20Sense/DJDevon3_MyCustom_Offline_Weatherstation_Humidity.jpg)
   
   # BLE Timestamp Indoor Weather Station
-  In my BLE sketch the NRF52840 will show up as "Bluefruit52" on your iOS device. Bluefruit52 is the standard name given to Adafruit's NRF52xxx bluetooth capable boards. This Arduino sketch has BLE timestamp integration. Unfortunately the Adafruit library currently only works with iOS devices. This is noted in their learn guides as of July 2020.
+  In my BLE sketch the NRF52840 will show up as "Bluefruit52" on your iOS device. Bluefruit52 is the standard name given to Adafruit's NRF52xxx bluetooth capable boards. This Arduino sketch has BLE timestamp integration.
   
   * Adafruit recommends you install Adafruits BLE Connect App (free from Apple store) to control your Bluefruit Sense board from your iOS device.
   https://learn.adafruit.com/bluefruit-le-connect
