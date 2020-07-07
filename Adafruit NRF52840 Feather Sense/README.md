@@ -32,7 +32,7 @@ My custom sketck uses setCursor positioning, temp sensor buffer, and slightly im
   
   ![](https://github.com/DJDevon3/Arduino/blob/master/Adafruit%20NRF52840%20Feather%20Sense/DJDevon3_BLE_Weatherstation_ios_pairing.jpg)
   
-  The Bluefruit Sense board does not have a real-time clock (method to keep accurate time by itself). After paired it will display the current date/time pulled from your iOS device onto the 3.5" TFT. Currrent timestamp is the only data transfered from your iOS device. After disconnecting from bluetooth the weatherstation reverts the first line back to whatever message you've customized it to display. It requires an iOS device connected to show the timestamp in real-time.
+  The Bluefruit Sense board does not have a real-time clock (method to keep accurate time by itself). After paired it will display the current date/time pulled from your iOS device onto the 3.5" TFT. Currrent timestamp is the only data transfered from your iOS device. After disconnecting from bluetooth the weatherstation reverts the first line back to whatever message you've customized it to display. It requires an iOS device connected to show the timestamp in real-time. My sketch will not work for Android to my knowledge and I have no intention on updating it for Android at this time.
   
   ![](https://github.com/DJDevon3/Arduino/blob/master/Adafruit%20NRF52840%20Feather%20Sense/DJDevon3_BLE_Weatherstation.jpg)
   
