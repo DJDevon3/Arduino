@@ -20,12 +20,12 @@ Once you play around with the demo you'll see how easy it is to customize it usi
 
  ![](https://raw.githubusercontent.com/DJDevon3/Arduino/master/Adafruit%20NRF52840%20Feather%20Sense/DJDevon3_MyCustom_Offline_Weatherstation.jpg)
  
-My custom sketck uses setCursor positioning, temp sensor buffer, and slightly improved code. There are 5 different temperature ranges which change the temp font color. If all you want is a basic indoor temp monitor then this is likely the one you'll want to run instead of the sensor demo. The code is slightly more advanced than the demo but highly customizable if you aren't a beginner.
+My custom sketck uses setCursor positioning, temp sensor buffer, and slightly improved code. There are 5 different temperature ranges which change the temp font color. If all you want is a basic indoor temp monitor then this is likely the one you'll want to run instead of the sensor demo. The code is slightly more advanced than the demo and more customizable if you aren't a beginner.
  
   ![](https://github.com/DJDevon3/Arduino/blob/master/Adafruit%20NRF52840%20Feather%20Sense/DJDevon3_MyCustom_Offline_Weatherstation_Humidity.jpg)
   
   # BLE Timestamp Indoor Weather Station
-  In my BLE sketch the NRF52840 will show up as "Bluefruit52" on your iOS device. Bluefruit52 is the standard name given to Adafruit's NRF52xxx bluetooth capable boards. This Arduino sketch has BLE timestamp integration.
+  My BLE (Bluetooth Low Energy) sketch is the most advanced sketch out of the group. The NRF52840 will show up as "Bluefruit52" on your iOS device. Bluefruit52 is the standard name given to Adafruit's NRF52xxx bluetooth capable boards. This Arduino sketch has BLE timestamp integration. This sketch includes more advanced code than the others including a *newly updated battery voltage & USB voltage display.
   
   * Adafruit recommends you install Adafruits BLE Connect App (free from Apple store) to control your Bluefruit Sense board from your iOS device.
   https://learn.adafruit.com/bluefruit-le-connect
