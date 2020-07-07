@@ -101,7 +101,6 @@ extern PDMClass PDM;
 short sampleBuffer[256];  // buffer to read samples into, each sample is 16-bits
 volatile int samplesRead; // number of samples read
 
-
 void setup() {
   Serial.begin(115200); 
   // Initialize the sensors
@@ -298,7 +297,7 @@ unsigned long Display() {
   tft.setTextColor(HX8357_YELLOW, HX8357_BLACK);
   tft.setTextSize(2);
   
-  // Get timestamp via Bluetooth connected device (smartphone, tablet, pc)
+  // If connected to Bluetooth device pull & display timestamp
     if (bleCTime.getCurrentTime() !=NULL ){
       tft.print("Date: ");
       tft.print(day_of_week_str[bleCTime.Time.weekday]);
@@ -365,6 +364,37 @@ unsigned long Display() {
   tft.setTextSize(3);
   tft.print("Barometer: ");
   tft.println(millibar); //During hurricanes NOAA reports barometric pressure in millibar.
+
+  // Function for detecting if using USB Power or Battery. It's a hardware work around piece of code but it works.
+  float batVoltage = checkBattery();  //get battery voltage
+  if (batVoltage < 3.95) {
+    int batread = analogRead(A6);
+    tft.setCursor(0, 290);
+    tft.setTextColor(HX8357_GREEN, HX8357_BLACK);
+    tft.setTextSize(3);
+    tft.print("Bat: " ); 
+    tft.print(batVoltage);  //display battery voltage (3.7v battery might slightly overcharge to 3.8v, same for a 4.2v battery)
+    tft.print("V");
+    // For debugging Battery value. Value approximately 1200 for 3.7v battery and 1690 for 4.2v battery. Useful for calculating battery life.
+    // tft.print(" Value:" ); 
+    // tft.println(batread * 2);  
+    */
+  } else {
+    int batread = analogRead(A6);
+    tft.setCursor(0, 290);
+    tft.setTextColor(HX8357_GREEN, HX8357_BLACK);
+    tft.setTextSize(3);
+    tft.print("USB: " ); 
+    tft.print(batVoltage);  //display USB voltage (normal USB voltage for Feather Sense is approximately 3.95-3.96 with this calculation)
+    tft.print("V");
+    // For debugging USB value. Display USB value. Value approximately 1225-1230 for USB. Useful for knowing when the board is USB vs Battery powered.
+    // As long as you know the constant value to expect from USB then anything less must be running on a battery... right?
+    // tft.print(" Value:" ); 
+    // tft.println(batread * 2); // Note: The same batread value is used for both Bat & USB because both power traces on the PCB use pin A6 on the Feather Sense.
+    // This is something I cobbled together as a software switch between Battery & USB power modes. I'm using a 3.7v PKCell battery (from Adafruit). This shabby code definitely works for me.
+  }
+ 
+  delay(100);
 }
 
 void tempText(){ // Set a function instead of repeating every line in temp color difference.
@@ -372,6 +402,15 @@ void tempText(){ // Set a function instead of repeating every line in temp color
     tft.setTextSize(3);
     tft.println("Temp: ");
     tft.setCursor(135, 80);
+}
+  // Returns current voltage of 3.7v Lipo battery on a Feather Sense (3.2v-3.8v working range). Voltage should always show 4.2v with no battery plugged in.
+  // Calculate battery life percentage from 3.2v to 4.2v
+float checkBattery(){
+  float measuredvbat = analogRead(A6);
+  measuredvbat *= 2;    // we divided by 2, so multiply back
+  measuredvbat *= 3.3;  // Multiply by 3.3V, our reference voltage
+  measuredvbat /= 1024; // convert to voltage
+  return measuredvbat;
 }
 
 /* FEATHER SENSE SENSOR FUNCTIONS */
