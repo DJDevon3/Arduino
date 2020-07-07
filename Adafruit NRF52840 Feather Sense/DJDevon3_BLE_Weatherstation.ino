@@ -378,7 +378,7 @@ unsigned long Display() {
     // For debugging Battery value. Value approximately 1200 for 3.7v battery and 1690 for 4.2v battery. Useful for calculating battery life.
     // tft.print(" Value:" ); 
     // tft.println(batread * 2);  
-    */
+    
   } else {
     int batread = analogRead(A6);
     tft.setCursor(0, 290);
