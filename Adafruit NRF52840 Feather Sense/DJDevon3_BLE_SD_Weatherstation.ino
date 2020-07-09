@@ -14,7 +14,7 @@
  ****************************************************/
  /* Simple Offline Indoor Weather Station using Adafruit NRF52840 Bluefruit Feather Sense & Adafruit 3.5" TFT by DJDevon3 */
  /**************  Devons Garage Weatherstation with BLE Date/Time ***********/
- // This sketch requires an Adafruit Bluefruit Sense & Adafruit 3.5" TFT Featherwing.
+ // This sketch requires an Adafruit Feather Bluefruit Sense Board & Adafruit 3.5" TFT Featherwing (with a Micro SD card plugged into the Featherwing TFT).
 
 #include <SPI.h>
 #include "Adafruit_GFX.h"
