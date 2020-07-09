@@ -348,7 +348,7 @@ unsigned long Display() {
     tft.setTextColor(HX8357_RED, HX8357_BLACK);
     tft.setCursor(0, 40);
     tft.setTextSize(3);
-    tft.println("Temp: ");
+    tft.println("Temp");
     tft.setCursor(85, 80);
   } else {
     tft.setTextColor(HX8357_WHITE, HX8357_BLACK);
@@ -375,7 +375,7 @@ unsigned long Display() {
   tft.setTextColor(HX8357_GREEN, HX8357_BLACK);
   tft.println(millibar); //During hurricanes NOAA reports barometric pressure in millibar.
 
-  // Function for detecting if using USB Power or Battery. It's a hardware work around piece of code but it works.
+  // Function for detecting if using USB Power or Battery.
   float batVoltage = checkBattery();  //get battery voltage
   if (batVoltage < 3.95) {
     int batread = analogRead(A6);
@@ -405,7 +405,7 @@ unsigned long Display() {
     // As long as you know the constant value to expect from USB then anything less must be running on a battery... right?
     // tft.print(" Value:" ); 
     // tft.println(batread * 2); // Note: The same batread value is used for both Bat & USB because both power traces on the PCB use pin A6 on the Feather Sense.
-    // This is something I cobbled together as a software switch between Battery & USB power modes. I'm using a 3.7v PKCell battery (from Adafruit). This shabby code definitely works for me.
+    // I'm using a 3.7v PKCell battery (from Adafruit).
   }
  
   delay(100);
@@ -414,7 +414,7 @@ unsigned long Display() {
 void tempText(){ // Set a function instead of repeating every line in temp color difference.
     tft.setCursor(0, 40);
     tft.setTextSize(3);
-    tft.println("Temp: ");
+    tft.println("Temp");
     tft.setCursor(135, 80);
 }
   // Returns current voltage of 3.7v Lipo battery on a Feather Sense (3.2v-3.8v working range). Voltage should always show 4.2v with no battery plugged in.
