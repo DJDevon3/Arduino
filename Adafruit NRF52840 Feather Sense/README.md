@@ -27,12 +27,12 @@ My custom sketch uses setCursor positioning, temp sensor buffer, and slightly im
   # BLE Timestamp Indoor Weather Station
   My BLE (Bluetooth Low Energy) sketch is the most advanced sketch out of the group. The NRF52840 will show up as "Bluefruit52" on your iOS device. Bluefruit52 is the standard name given to Adafruit's NRF52xxx bluetooth capable boards. This Arduino sketch has BLE timestamp integration. This sketch includes more advanced code than the others including a *newly updated battery voltage & USB voltage display.
   
-  * Adafruit recommends you install Adafruits BLE Connect App (free from Apple or Android store) to control your Bluefruit Sense board from your iOS or Android device.
+  * Adafruit recommends you install Adafruits BLE Connect App (free from Apple or Android store) to control your Bluefruit Sense board from your iOS or Android device. To my knowledge, my BLE sketch will not pair with an Android device and I have no intention on updating it for Android at this time.
   https://learn.adafruit.com/bluefruit-le-connect
   
   ![](https://github.com/DJDevon3/Arduino/blob/master/Adafruit%20NRF52840%20Feather%20Sense/DJDevon3_BLE_Weatherstation_ios_pairing.jpg)
   
-  The Bluefruit Sense board does not have a real-time clock (method to keep accurate time by itself). After paired it will display the current date/time pulled from your iOS device onto the 3.5" TFT. Currrent timestamp is the only data transfered from your iOS device. After disconnecting from bluetooth the weatherstation reverts the first line back to whatever message you've customized it to display. It requires an iOS device connected to show the timestamp in real-time. My BLE sketch will not pair with an Android device to my knowledge and I have no intention on updating it for Android at this time.
+  The Bluefruit Sense board does not have a real-time clock (method to keep accurate time by itself). After paired it will display the current date/time pulled from your iOS device onto the 3.5" TFT. The currrent timestamp is the ONLY data transfered from your iOS device to the Feather. After disconnecting from bluetooth the weatherstation reverts the first line back to whatever message you've customized it to display. It requires an iOS device connected to show the timestamp in real-time. 
   
   ![](https://github.com/DJDevon3/Arduino/blob/master/Adafruit%20NRF52840%20Feather%20Sense/DJDevon3_BLE_Weatherstation.jpg)
   
