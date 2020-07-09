@@ -39,6 +39,9 @@ My custom sketch uses setCursor positioning, temp sensor buffer, and slightly im
    # BLE Timestamp Indoor Weather Station with SD Card Wallpaper
    - Required hardware: Adafruit NRF52840 Feather Sense board and 3.5" TFT Featherwing with FAT16 or FAT32 formatted microSD card.
    
+   Also required for the demo are all of the following libraries:
+* Adafruit SDFat Fork.h>
+   
    Same sketch as the BLE Timestamp Indoor Weather Station except this one integrates the SD Card function of the 3.5" TFT Featherwing. Sets a wallpaper background image first then fills in weatherstation text over it. I've left some correctly formatted 320x480 24-Bit formatted BMP wallpapers in the repository. Wallpapers are named: astral, grdark, horizon, ocean, purbokeh, sunrise, and texdark. 
    
    There is a problem with characters requiring updates to require a black background to be correctly updated. This issue cannot be seen if you use a solid color black background, however if you add a wallpaper the issue becomes extremely obvious. To my knowledge that issue is within the Adafruit GFX or HX8357 TFT library.
