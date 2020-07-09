@@ -27,7 +27,7 @@ My custom sketch uses setCursor positioning, temp sensor buffer, and slightly im
   # BLE Timestamp Indoor Weather Station
   My BLE (Bluetooth Low Energy) sketch is the most advanced sketch out of the group. The NRF52840 will show up as "Bluefruit52" on your iOS device. Bluefruit52 is the standard name given to Adafruit's NRF52xxx bluetooth capable boards. This Arduino sketch has BLE timestamp integration. This sketch includes more advanced code than the others including a *newly updated battery voltage & USB voltage display.
   
-  * Adafruit recommends you install Adafruits BLE Connect App (free from Apple store) to control your Bluefruit Sense board from your iOS device.
+  * Adafruit recommends you install Adafruits BLE Connect App (free from Apple or Android store) to control your Bluefruit Sense board from your iOS or Android device.
   https://learn.adafruit.com/bluefruit-le-connect
   
   ![](https://github.com/DJDevon3/Arduino/blob/master/Adafruit%20NRF52840%20Feather%20Sense/DJDevon3_BLE_Weatherstation_ios_pairing.jpg)
